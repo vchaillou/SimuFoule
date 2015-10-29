@@ -47,7 +47,8 @@ public class MapGenerateurFixe implements MapGenerateur {
 				case CaseEtatArrive.getInstance().toChar():
 					map.registerNode(new Case(i++, y), CaseEtatArrivee.getInstance());
 					break;
-
+				
+					//
 				}
 
 			}
