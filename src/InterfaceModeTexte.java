@@ -1,3 +1,4 @@
+package simufoule;
 
 public class InterfaceModeTexte implements Interface {
 
@@ -18,7 +19,11 @@ public class InterfaceModeTexte implements Interface {
 				}
 				System.out.println("");
 			}
-			Thread.sleep(1000);
+			try {
+				Thread.sleep(1000);
+			} catch(Exception e) {
+				System.out.println(e.toString());
+			}
 		}
 	}
 }

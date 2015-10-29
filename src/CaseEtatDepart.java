@@ -1,3 +1,4 @@
+package simufoule;
 
 public class CaseEtatDepart implements CaseEtat {
 
@@ -32,7 +33,7 @@ public class CaseEtatDepart implements CaseEtat {
 
 	@Override
 	public void faireTour(Simulateur unSimulateur, Case uneCase) {
-		if(uneCase.estCirculable()) {
+		if(uneCase.estCirculable() && nbPersonnes > 0) {
 			unSimulateur.ajouterPersonne(new Personne(uneCase));
 			uneCase.setOccupee(true);
 			nbPersonnes--;
