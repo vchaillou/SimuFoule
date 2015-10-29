@@ -1,5 +1,5 @@
+package simufoule;
 
-import java.util.ArrayList;
 
 public class MapGenerateurFixe implements MapGenerateur {
 
@@ -16,39 +16,37 @@ public class MapGenerateurFixe implements MapGenerateur {
 			}
 			y++;
 		}
-		// this.map[1][1] = '*';
+		//this.map[1][1] = '*';
 	}
 
-	public IGraph getMap() {
-		IGraph map = new Graphe();
+	public Graphe getMap() {
+		Graphe map = new Graphe();
 		int i = 0;
 		int y = 0;
 
 		for (char[] cs : this.map) {
 			for (char cs2 : cs) {
 				switch (cs2) {
-
+				
 				case CaseEtatBloquee.getInstance().toChar():
-					map.registerNode(new Case(i++, y), CaseEtatBloquee.getInstance());
-					break;
-
+					map.registerNode(new Case(i++, y, CaseEtatBloquee.getInstance()));
+				break;
+				
 				case CaseEtatHerbe.getInstance().toChar():
-					map.registerNode(new Case(i++, y), CaseEtatHerbe.getInstance());
-					break;
+					map.registerNode(new Case(i++, y, CaseEtatHerbe.getInstance()));
+				break;
 
 				case CaseEtatStandard.getInstance().toChar():
-					map.registerNode(new Case(i++, y), CaseEtatStandard.getInstance());
-					break;
+					map.registerNode(new Case(i++, y, CaseEtatStandard.getInstance()));
+				break;
 
 				case CaseEtatDepart.getInstance().toChar():
-					map.registerNode(new Case(i++, y), CaseEtatDepart.getInstance());
+					map.registerNode(new Case(i++, y, CaseEtatDepart.getInstance()));
 					break;
 
-				case CaseEtatArrive.getInstance().toChar():
-					map.registerNode(new Case(i++, y), CaseEtatArrivee.getInstance());
-					break;
-				
-					//
+				case CaseEtatArrivee.getInstance().toChar():
+					map.registerNode(new Case(i++, y, CaseEtatArrivee.getInstance()));
+				break;
 				}
 
 			}
