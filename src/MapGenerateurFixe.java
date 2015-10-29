@@ -23,37 +23,23 @@ public class MapGenerateurFixe implements MapGenerateur {
 		Graphe map = new Graphe();
 		int i = 0;
 		int y = 0;
+		CaseEtat[] etats = {CaseEtatBloquee.getInstance(),
+							CaseEtatHerbe.getInstance(),
+							CaseEtatStandard.getInstance(),
+							CaseEtatDepart.getInstance(),
+							CaseEtatArrivee.getInstance()
+							};
 
 		for (char[] cs : this.map) {
 			for (char cs2 : cs) {
-				switch (cs2) {
-				
-				case CaseEtatBloquee.getInstance().toChar():
-					map.registerNode(new Case(i++, y, CaseEtatBloquee.getInstance()));
-				break;
-				
-				case CaseEtatHerbe.getInstance().toChar():
-					map.registerNode(new Case(i++, y, CaseEtatHerbe.getInstance()));
-				break;
-
-				case CaseEtatStandard.getInstance().toChar():
-					map.registerNode(new Case(i++, y, CaseEtatStandard.getInstance()));
-				break;
-
-				case CaseEtatDepart.getInstance().toChar():
-					map.registerNode(new Case(i++, y, CaseEtatDepart.getInstance()));
-					break;
-
-				case CaseEtatArrivee.getInstance().toChar():
-					map.registerNode(new Case(i++, y, CaseEtatArrivee.getInstance()));
-				break;
+				for(CaseEtat unEtat : etats) {
+					if(cs2 == unEtat.toChar()) {
+						map.registerNode(new Case(i++, y, unEtat));
+					}
 				}
-
 			}
 			y++;
-
 		}
-
 		return map;
 	}
 }
