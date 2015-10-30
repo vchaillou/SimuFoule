@@ -17,7 +17,7 @@ public class InterfaceModeTexte implements Interface {
 			simulateur.lancerTour();
 			Graphe uneMap = simulateur.getMap();
 			for(int i=0 ; i<uneMap.getNbLignes() ; i++) {
-				for(int j=0 ; j<uneMap.getNbColonnes() ; j++) {
+				for(int j=0 ; j<=uneMap.getNbColonnes() ; j++) {
 					System.out.print(uneMap.getNode(i, j).toChar());
 				}
 				System.out.println("");
