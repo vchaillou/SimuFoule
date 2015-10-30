@@ -3,9 +3,11 @@ package simufoule;
 public class InterfaceModeTexte implements Interface {
 
 	private Simulateur simulateur;
+	private int vitesse;		// en ms
 	
 	public InterfaceModeTexte(Simulateur unSimulateur) {
 		simulateur = unSimulateur;
+		vitesse = 1000;
 	}
 	
 	@Override
@@ -21,7 +23,7 @@ public class InterfaceModeTexte implements Interface {
 				System.out.println("");
 			}
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(vitesse);
 			} catch(Exception e) {
 				System.out.println(e.toString());
 			}

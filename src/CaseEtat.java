@@ -1,3 +1,4 @@
+package simufoule;
 
 public interface CaseEtat {
 	
@@ -6,4 +7,5 @@ public interface CaseEtat {
 	public void faireTour(Simulateur unSimulateur, Case uneCase);
 	public boolean estArrivee();
 	public char toChar();
+	public void initCase(Case uneCase);
 }

@@ -1,3 +1,4 @@
+package simufoule;
 
 public class CaseEtatHerbe implements CaseEtat {
 
@@ -33,6 +34,11 @@ public class CaseEtatHerbe implements CaseEtat {
 	@Override
 	public char toChar() {
 		return 'G';
+	}
+
+	@Override
+	public void initCase(Case uneCase) {
+		// Rien à faire
 	}
 
 }

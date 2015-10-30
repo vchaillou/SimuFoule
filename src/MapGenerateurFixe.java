@@ -1,12 +1,8 @@
 package simufoule;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MapGenerateurFixe implements MapGenerateur {
 
 	private char[][] map;
-	private List<Case> portes; // n'est initialisée qu'après getMap
 
 	public MapGenerateurFixe() {
 		String carte = "************************************************\n*      *              *                    A   *\n* ** A  *   ********** *             *   *     *\n* **    *     *      * * *******     *****     *\n*  *    ****  * G*   *   GGG      *  *         *\n*  *        *  * G*   *******     *  ******    *\n*               GG* *       *     *       **   *\n*****G********************  *  ********   *    *\n*  GGGG  * GGGG   *         *         *   *  * *\n* *** GG * G*G*****  ***    ******    *   *    *\n*GGGGGG  * G*G*       *          *    *   **   *\n* G****  *        *************  ******   *    *\n* GGGGGGGGG *   P      GGGG  *           *     *\n****** ******     ****  GGGG  *      ********  *\n*           *     *       GGG *                *\n*  ******   *                                  *\n*   *            P                      D      *\n*    D      *                                  *\n************************************************";
@@ -22,7 +18,6 @@ public class MapGenerateurFixe implements MapGenerateur {
 			i++;
 			y=0;
 		}
-		portes = new ArrayList<Case>();
 	}
 
 	public Graphe getMap() {
@@ -41,9 +36,6 @@ public class MapGenerateurFixe implements MapGenerateur {
 				for(CaseEtat unEtat : etats) {
 					if(cs2 == unEtat.toChar()) {
 						map.registerNode(new Case(i++, y, unEtat));
-						if(unEtat == CaseEtatDepart.getInstance()) {
-							portes.add(map.getNode(i-1,  y));
-						}
 					}
 				}
 			}
@@ -53,8 +45,4 @@ public class MapGenerateurFixe implements MapGenerateur {
 		return map;
 	}
 
-	@Override
-	public List<Case> getPortes() {
-		return portes;
-	}
 }

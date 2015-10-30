@@ -1,9 +1,7 @@
 package simufoule;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Simulateur{
 
@@ -11,10 +9,6 @@ public class Simulateur{
 	private List<Personne> personnes;
 	private List<ParcoursObservateur> observateurs;
 	
-	private List<Case> portes;
-	private Map<Case, Integer> portesPersonnes;
-	
-	private int vitesse;		// en ms
 	private int nbTours;
 	private int nbArrivees;
 	private int nbDeplacements;
@@ -22,14 +16,8 @@ public class Simulateur{
 	public Simulateur() {
 		MapGenerateur unGenerateur = new MapGenerateurFixe();
 		map = unGenerateur.getMap();
-		portes = unGenerateur.getPortes();
-		portesPersonnes = new HashMap<Case, Integer>();
 		personnes = new ArrayList<Personne>();
 		observateurs = new ArrayList<ParcoursObservateur>();
-		for(Case uneCase : portes) {
-			portesPersonnes.put(uneCase, 0);
-		}
-		vitesse=500;
 		nbTours=0;
 		nbArrivees=0;
 		nbDeplacements=0;
@@ -75,34 +63,16 @@ public class Simulateur{
 		}
 	}
 	
-	public void setNbPersonnes(Case uneCase, int unNbPersonnes) {
-		if(portes.contains(uneCase)) {
-			portesPersonnes.put(uneCase, unNbPersonnes);
-		}
+	public void setNbPersonnes(int unNumCase, int unNbPersonnes) {
+		CaseEtatDepart.getInstance().setNbCasePersonnes(unNumCase, unNbPersonnes);
 	}
 	
-	public int getNbPersonnes(Case uneCase) {
-		int iResultat = -1;
-		if(portes.contains(uneCase)) {
-			iResultat = portesPersonnes.get(uneCase);
-		}
-		return iResultat;
+	public int getNbPersonnes(int unNumCase) {
+		return CaseEtatDepart.getInstance().getNbCasePersonnes(unNumCase);
 	}
 	
-	public void traiterPorte(Case uneCase) {
-		if(portes.contains(uneCase) && portesPersonnes.get(uneCase) > 0) {		// uneCase est circulable
-			personnes.add(new Personne(uneCase));
-			uneCase.setOccupee(true);
-			portesPersonnes.put(uneCase, portesPersonnes.get(uneCase) - 1);
-		}
-	}
-	
-	public int getVitesse() {
-		return vitesse;
-	}
-	
-	public void setVitesse(int uneVitesse) {
-		vitesse = uneVitesse;
+	public void ajouterPersonne(Personne unePersonne) {
+		personnes.add(unePersonne);
 	}
 	
 	public int getNbTours() {

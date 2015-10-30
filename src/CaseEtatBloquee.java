@@ -1,3 +1,4 @@
+package simufoule;
 
 public class CaseEtatBloquee implements CaseEtat {
 
@@ -33,5 +34,10 @@ public class CaseEtatBloquee implements CaseEtat {
 	@Override
 	public char toChar() {
 		return '*';
+	}
+
+	@Override
+	public void initCase(Case uneCase) {
+		// Rien à faire
 	}
 }
