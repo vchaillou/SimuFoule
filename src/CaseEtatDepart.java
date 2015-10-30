@@ -3,18 +3,8 @@ package simufoule;
 public class CaseEtatDepart implements CaseEtat {
 
 	private static CaseEtatDepart ETAT = new CaseEtatDepart();
-	private int nbPersonnes;
 	
 	private CaseEtatDepart() {
-		this(10);
-	}
-	
-	private CaseEtatDepart(int unNbPersonnes) {
-		nbPersonnes = unNbPersonnes;
-	}
-	
-	public void setNbPersonnes(int unNbPersonnes) {
-		nbPersonnes = unNbPersonnes;
 	}
 	
 	@Override
@@ -33,12 +23,9 @@ public class CaseEtatDepart implements CaseEtat {
 
 	@Override
 	public void faireTour(Simulateur unSimulateur, Case uneCase) {
-		if(uneCase.estCirculable() && nbPersonnes > 0) {
-			unSimulateur.ajouterPersonne(new Personne(uneCase));
-			uneCase.setOccupee(true);
-			nbPersonnes--;
+		if(uneCase.estCirculable()) {
+			unSimulateur.traiterPorte(uneCase);
 		}
-		
 	}
 
 	@Override

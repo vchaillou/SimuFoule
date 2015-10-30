@@ -1,3 +1,5 @@
+package simufoule;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +79,10 @@ public class Case implements INode<Integer, CaseEtat> {
 	
 	public void faireTour(Simulateur unSimulateur) {
 		etat.faireTour(unSimulateur, this);
+	}
+	
+	public char toChar() {
+		return occupee ? 'P' : etat.toChar();
 	}
 
 }

@@ -1,7 +1,7 @@
+package simufoule;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Graphe implements IGraph<Integer, CaseEtat> {
@@ -20,7 +20,7 @@ public class Graphe implements IGraph<Integer, CaseEtat> {
 	public Case getNode(Integer unX, Integer unY) {
 		Case nResultat = null;
 		for(Case noeud : noeuds) {
-			if(noeud.getX() == unX && noeud.getY() == unY) {
+			if(unX.equals(noeud.getX()) && unY.equals(noeud.getY())) {
 				nResultat = noeud;
 				break;
 			}
@@ -35,21 +35,17 @@ public class Graphe implements IGraph<Integer, CaseEtat> {
 		Case uneCase = (Case)node;
 		noeuds.add(uneCase);
 		
-		if(uneCase.getX() > nbColonnes)
-			nbColonnes = uneCase.getX();
-		if(uneCase.getY() > nbLignes)
-			nbLignes = uneCase.getY();
+		if(uneCase.getX() > nbLignes)
+			nbLignes = uneCase.getX();
+		if(uneCase.getY() > nbColonnes)
+			nbColonnes = uneCase.getY();
 	}
 
 	@Override
 	public void unregisterNode(Integer unX, Integer unY) {
-		Iterator<Case> unIterateur = noeuds.iterator();
-		Case unNoeud;
-		while(unIterateur.hasNext()) {
-			unNoeud = unIterateur.next();
-			if(unNoeud.getX() == unX && unNoeud.getY() == unY) {
-				unIterateur.remove();
-				break;
+		for(Case noeud : noeuds) {
+			if(unX.equals(noeud.getX()) && unY.equals(noeud.getY())) {
+				noeuds.remove(noeud);
 			}
 		}
 	}

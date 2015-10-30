@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Personne {
 
-	public Case cCase;
+	private Case cCase;
 
 	public Personne(Case cCase) {
 		super();

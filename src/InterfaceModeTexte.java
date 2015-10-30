@@ -11,11 +11,12 @@ public class InterfaceModeTexte implements Interface {
 	@Override
 	public void afficherMap() {
 		while(true) {
+			System.out.println("\n\n\n");
 			simulateur.lancerTour();
 			Graphe uneMap = simulateur.getMap();
-			for(int i=0 ; i<uneMap.getNbColonnes() ; i++) {
-				for(int j=0 ; j<uneMap.getNbLignes() ; j++) {
-					System.out.print(uneMap.getNode(i, j));
+			for(int i=0 ; i<uneMap.getNbLignes() ; i++) {
+				for(int j=0 ; j<uneMap.getNbColonnes() ; j++) {
+					System.out.print(uneMap.getNode(i, j).toChar());
 				}
 				System.out.println("");
 			}
