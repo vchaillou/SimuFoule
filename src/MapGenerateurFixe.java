@@ -33,10 +33,23 @@ public class MapGenerateurFixe implements MapGenerateur {
 
 		for (char[] cs : this.map) {
 			for (char cs2 : cs) {
+				boolean bOk = false;
 				for(CaseEtat unEtat : etats) {
-					if(cs2 == unEtat.toChar()) {
-						map.registerNode(new Case(i++, y, unEtat));
+					if(cs2 == unEtat.toChar() && bOk == false) {
+						Case uneCase = new Case(i, y, unEtat);
+						map.registerNode(uneCase);
+						if(i > 0 && uneCase.estCirculable() && map.getNode(i-1, y).estCirculable()) {
+							new Lien(uneCase, map.getNode(i-1, y), 1);
+						}
+						if(y > 0 && uneCase.estCirculable() && map.getNode(i, y-1).estCirculable()) {
+							new Lien(uneCase, map.getNode(i, y-1), 1);
+						}
+						i++;
+						bOk = true;
 					}
+				}
+				if(bOk == false) {
+					map.registerNode(new Case(i++, y, CaseEtatBloquee.getInstance()));	// si erreur, case bloquée par défaut
 				}
 			}
 			y++;

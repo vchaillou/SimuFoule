@@ -21,6 +21,11 @@ public class Simulateur{
 		nbTours=0;
 		nbArrivees=0;
 		nbDeplacements=0;
+		
+		// Juste pour les tests
+		observateurs.add(new ParcoursObservateurAleatoire());
+		CaseEtatDepart.getInstance().setNbCasePersonnes(0, 10);
+		CaseEtatDepart.getInstance().setNbCasePersonnes(1, 10);
 	}
 	
 	public Graphe getMap(){

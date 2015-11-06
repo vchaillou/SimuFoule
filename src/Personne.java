@@ -9,6 +9,8 @@ public class Personne {
 	public Personne(Case cCase) {
 		super();
 		this.cCase = cCase;
+		if(cCase != null)
+			cCase.setOccupee(true);
 	}
 
 	public void setCase(Case uneCase) {
