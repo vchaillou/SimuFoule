@@ -21,6 +21,7 @@ public class Case implements INode<Integer, CaseEtat> {
 		edges = new ArrayList<Lien>();
 		occupee = false;
 		attente = etat.getAttente();
+		etat.initCase(this);
 	}
 	
 	public Case(int unX, int unY) {

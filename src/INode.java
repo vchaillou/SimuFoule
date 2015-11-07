@@ -1,3 +1,4 @@
+package simufoule;
 
 
 import java.util.List;

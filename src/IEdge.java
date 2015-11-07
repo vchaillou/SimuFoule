@@ -1,3 +1,4 @@
+package simufoule;
 
 
 public interface IEdge<K,V> {
