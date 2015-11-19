@@ -19,7 +19,7 @@ public class CaseEtatDepart implements CaseEtat {
 	
 	@Override
 	public boolean estCirculable() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -33,9 +33,11 @@ public class CaseEtatDepart implements CaseEtat {
 
 	@Override
 	public void faireTour(Simulateur unSimulateur, Case uneCase) {
-		if(uneCase.estCirculable() && casesPersonnes.get(uneCase) > 0) {
-			unSimulateur.ajouterPersonne(new Personne(uneCase));
-			casesPersonnes.put(uneCase, casesPersonnes.get(uneCase)-1);
+		for(Lien edge : (List<Lien>)uneCase.getEdges()) {
+			if(casesPersonnes.get(uneCase) > 0 && edge.getOther(uneCase).estCirculable() && !edge.getOther(uneCase).estOccupee()) {
+				unSimulateur.ajouterPersonne(new Personne(edge.getOther(uneCase)));
+				casesPersonnes.put(uneCase, casesPersonnes.get(uneCase)-1);
+			}
 		}
 	}
 
@@ -61,6 +63,11 @@ public class CaseEtatDepart implements CaseEtat {
 	
 	public void setNbCasePersonnes(int unNumCase, int unNbPersonnes) {
 		casesPersonnes.put(cases.get(unNumCase), unNbPersonnes);
+	}
+
+	@Override
+	public boolean estDepart() {
+		return true;
 	}
 
 }

@@ -8,6 +8,7 @@ public class Simulateur{
 	private Graphe map;
 	private List<Personne> personnes;
 	private List<ParcoursObservateur> observateurs;
+	private List<Case> destinations;
 	
 	private int nbTours;
 	private int nbArrivees;
@@ -18,14 +19,23 @@ public class Simulateur{
 		map = unGenerateur.getMap();
 		personnes = new ArrayList<Personne>();
 		observateurs = new ArrayList<ParcoursObservateur>();
+		destinations = new ArrayList<Case>();
+		for(int i=0 ; i<map.getNbLignes() ; i++) {
+			for(int j=0 ; j<map.getNbColonnes() ; j++) {
+				if(map.getNode(i, j).estArrivee()) {
+					destinations.add(map.getNode(i, j));
+				}
+			}
+		}
 		nbTours=0;
 		nbArrivees=0;
 		nbDeplacements=0;
 		
 		// Juste pour les tests
-		observateurs.add(new ParcoursObservateurAleatoire());
-		CaseEtatDepart.getInstance().setNbCasePersonnes(0, 10);
-		CaseEtatDepart.getInstance().setNbCasePersonnes(1, 10);
+		//observateurs.add(new ParcoursObservateurAleatoire());
+		observateurs.add(new ParcoursObservateurDijkstra());
+		CaseEtatDepart.getInstance().setNbCasePersonnes(1, 1);
+		//CaseEtatDepart.getInstance().setNbCasePersonnes(1, 10);
 	}
 	
 	public Graphe getMap(){
@@ -39,8 +49,9 @@ public class Simulateur{
 	//parcours la liste des personne et faireTour();
 	public void lancerTour() {
 		for (Personne pers : personnes) {
-			pers.faireTour(observateurs);
+			pers.faireTour(observateurs, destinations, map);
 			nbDeplacements++;
+			break;
 		}
 		for(int i=0 ; i<map.getNbLignes() ; i++) {
 			for(int j=0 ; j<map.getNbColonnes(); j++) {
@@ -59,12 +70,16 @@ public class Simulateur{
 	}
 
 	public void viderCase(Case uneCase){
+		List<Personne> desPersonnesASupp = new ArrayList<Personne>();
 		uneCase.setOccupee(false);
 		for (Personne pers : personnes) {
 			if(pers.getCase() == uneCase) {
-				personnes.remove(pers);
+				desPersonnesASupp.add(pers);
 				nbArrivees++;
 			}
+		}
+		for(Personne pers : desPersonnesASupp) {
+			personnes.remove(pers);
 		}
 	}
 	

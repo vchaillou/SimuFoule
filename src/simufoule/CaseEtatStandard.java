@@ -41,4 +41,9 @@ public class CaseEtatStandard implements CaseEtat {
 		// Rien à faire
 	}
 
+	@Override
+	public boolean estDepart() {
+		return false;
+	}
+
 }

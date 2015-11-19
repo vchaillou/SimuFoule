@@ -3,7 +3,7 @@ package simufoule;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Case implements INode<Integer, CaseEtat> {
+public class Case implements INode<Integer, Integer> {
 
 	private int x;
 	private int y;
@@ -29,7 +29,15 @@ public class Case implements INode<Integer, CaseEtat> {
 	}
 	
 	public boolean estCirculable() {
-		return !occupee & etat.estCirculable();
+		return etat.estCirculable();
+	}
+	
+	public boolean estOccupee() {
+		return occupee;
+	}
+	
+	public boolean estArrivee() {
+		return etat.estArrivee();
 	}
 	
 	@Override
@@ -43,13 +51,12 @@ public class Case implements INode<Integer, CaseEtat> {
 	}
 
 	@Override
-	public CaseEtat getValeur() {
-		return etat;
+	public Integer getValeur() {
+		return 0;
 	}
 
 	@Override
-	public void setValeur(CaseEtat uneValeur) {
-		etat = uneValeur;
+	public void setValeur(Integer uneValeur) {
 	}
 
 	@Override
@@ -58,7 +65,7 @@ public class Case implements INode<Integer, CaseEtat> {
 	}
 
 	@Override
-	public void addEdge(IEdge<Integer, CaseEtat> unLien) {
+	public void addEdge(IEdge<Integer, Integer> unLien) {
 		if(!(unLien instanceof Lien))
 			return;
 		edges.add((Lien)unLien);
@@ -84,6 +91,18 @@ public class Case implements INode<Integer, CaseEtat> {
 	
 	public char toChar() {
 		return occupee ? 'P' : etat.toChar();
+	}
+	
+	public int getAttente() {
+		return etat.getAttente();
+	}
+	
+	public boolean estDepart() {
+		return etat.estDepart();
+	}
+	
+	public String toString() {
+		return "" + toChar();
 	}
 
 }

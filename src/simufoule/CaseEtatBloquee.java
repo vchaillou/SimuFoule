@@ -40,4 +40,9 @@ public class CaseEtatBloquee implements CaseEtat {
 	public void initCase(Case uneCase) {
 		// Rien à faire
 	}
+
+	@Override
+	public boolean estDepart() {
+		return false;
+	}
 }

@@ -38,10 +38,10 @@ public class MapGenerateurFixe implements MapGenerateur {
 					if(cs2 == unEtat.toChar() && bOk == false) {
 						Case uneCase = new Case(i, y, unEtat);
 						map.registerNode(uneCase);
-						if(i > 0 && uneCase.estCirculable() && map.getNode(i-1, y).estCirculable()) {
+						if(i > 0 && (uneCase.estCirculable() || uneCase.estDepart()) && (map.getNode(i-1, y).estCirculable() || map.getNode(i-1, y).estDepart())) {
 							new Lien(uneCase, map.getNode(i-1, y), 1);
 						}
-						if(y > 0 && uneCase.estCirculable() && map.getNode(i, y-1).estCirculable()) {
+						if(y > 0 && (uneCase.estCirculable() || uneCase.estDepart()) && (map.getNode(i, y-1).estCirculable() || map.getNode(i, y-1).estDepart())) {
 							new Lien(uneCase, map.getNode(i, y-1), 1);
 						}
 						i++;

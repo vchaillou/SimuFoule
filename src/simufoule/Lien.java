@@ -1,6 +1,6 @@
 package simufoule;
 
-public class Lien implements IEdge<Integer, CaseEtat> {
+public class Lien implements IEdge<Integer, Integer> {
 
 	private Case debut;
 	private Case fin;
@@ -17,11 +17,11 @@ public class Lien implements IEdge<Integer, CaseEtat> {
 	}
 	
 	public Lien(Case unDebut, Case uneFin) {
-		this(unDebut, uneFin, 0);
+		this(unDebut, uneFin, 1);
 	}
 	
 	@Override
-	public Case getOther(INode<Integer, CaseEtat> me) {
+	public Case getOther(INode<Integer, Integer> me) {
 		if(me == debut)
 			return fin;
 		return debut;
@@ -34,7 +34,6 @@ public class Lien implements IEdge<Integer, CaseEtat> {
 			cost = (int)value;
 			break;
 		}
-
 	}
 
 	@Override

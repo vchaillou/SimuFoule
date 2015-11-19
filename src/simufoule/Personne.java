@@ -19,9 +19,9 @@ public class Personne {
 		cCase.setOccupee(true);
 	}
 
-	public void faireTour(List<ParcoursObservateur> observateurs) {
+	public void faireTour(List<ParcoursObservateur> observateurs, List<Case> desDestinations, Graphe unGraphe) {
 		for (ParcoursObservateur obs : observateurs) {
-			obs.faireTour(this, cCase);
+			obs.faireTour(this, cCase, desDestinations, unGraphe);
 		}
 	}
 

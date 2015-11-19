@@ -4,7 +4,7 @@ package simufoule;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Graphe implements IGraph<Integer, CaseEtat> {
+public class Graphe implements IGraph<Integer, Integer> {
 	
 	private List<Case> noeuds;
 	private int nbColonnes;
@@ -29,7 +29,7 @@ public class Graphe implements IGraph<Integer, CaseEtat> {
 	}
 
 	@Override
-	public void registerNode(INode<Integer, CaseEtat> node) {
+	public void registerNode(INode<Integer, Integer> node) {
 		if(!(node instanceof Case))
 			return;
 		Case uneCase = (Case)node;
@@ -57,5 +57,4 @@ public class Graphe implements IGraph<Integer, CaseEtat> {
 	public int getNbLignes() {
 		return nbLignes;
 	}
-
 }
