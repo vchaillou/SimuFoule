@@ -102,7 +102,7 @@ public class InterfaceModeGraphique implements Interface {
 					
 					System.out.println(selectedFile.getName());
 					try {
-						content = readFile(selectedFile.getPath(), StandardCharsets.UTF_8);
+						String content = readFile(selectedFile.getPath(), StandardCharsets.UTF_8);
 						System.out.println(content);
 						
 						//ENTRE COMMENTAIRE CAR SINON NB PERSONNES VIDE
