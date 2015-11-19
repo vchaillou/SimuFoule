@@ -77,38 +77,7 @@ public class InterfaceModeGraphique implements Interface {
         panel_principal.add(panel_info, BorderLayout.CENTER);
         
         
-        //Graphe uneMap = simulateur.getMap();
-     
-      	/*	for(int i=0 ; i<=uneMap.getNbLignes() ; i++) {
-      			for(int j=0 ; j<=uneMap.getNbColonnes() ; j++) {
-      				JLabel l = new JLabel();
-      				
-      				switch(uneMap.getNode(i, j).toChar()){
-      				case ' ':
-      					l = new JLabel(new ImageIcon("src/standard.png"));
-      					break;
-      				case 'G':
-      					l = new JLabel(new ImageIcon("src/herbe.png"));
-      					break;
-      				case '*':
-      					l = new JLabel(new ImageIcon("src/mur.png"));
-      					break;
-      				case 'D':
-      					l = new JLabel(new ImageIcon("src/depart.png"));
-      					break;
-      				case 'A':
-      					l = new JLabel(new ImageIcon("src/arrive.png"));
-      					break;
-      				case 'P':
-      					l = new JLabel(new ImageIcon("src/souris.png"));
-      					break;
-      				}
-      				
-      				panel_map.add(l);
-      			}
-      			
-      		}*/
-        
+                
 		 f.setSize(1250, 600);
 	     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	     f.setVisible(true);
@@ -122,11 +91,6 @@ public class InterfaceModeGraphique implements Interface {
 			public void actionPerformed(ActionEvent arge0) {
 				System.out.println("Clic");
 				
-				
-				String content = "************************************************\n*      *              *                    A   *\n* ** A  *   ********** *             *   *     *\n* **    *     *      * * *******     *****     *\n*  *    ****  * G*   *   GGG      *  *         *\n*  *        *  * G*   *******     *  ******    *\n*               GG* *       *     *       **   *\n*****G********************  *  ********   *    *\n*  GGGG  * GGGG   *         *         *   *  * *\n* *** GG * G*G*****  ***    ******    *   *    *\n*GGGGGG  * G*G*       *          *    *   **   *\n* G****  *        *************  ******   *    *\n* GGGGGGGGG *   P      GGGG  *           *     *\n****** ******     ****  GGGG  *      ********  *\n*           *     *       GGG *                *\n*  ******   *                                  *\n*   *            P                      D      *\n*    D      *                                  *\n************************************************";
-				
-				
-				
 				String sSouris_1 = nb_souris_1.getText();
 				String sSouris_2 = nb_souris_2.getText();
 				String sVitesse = speed.getText();
@@ -136,23 +100,20 @@ public class InterfaceModeGraphique implements Interface {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
 					
-					//String map_import = 
 					System.out.println(selectedFile.getName());
 					try {
 						content = readFile(selectedFile.getPath(), StandardCharsets.UTF_8);
 						System.out.println(content);
+						
+						//ENTRE COMMENTAIRE CAR SINON NB PERSONNES VIDE
+						//simulateur.setMap(content);
 
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
 				
-				//ENTRE COMMENTAIRE CAR SINON NB PERSONNES VIDE
-				//simulateur.setMap(content);
-				
-				//simulateur.setNbPersonnes(0, 50);
-				System.out.println(simulateur.getNbPersonnes());
-				
+				//System.out.println(simulateur.getNbPersonnes());				
 				
 				if(!isInteger(sSouris_1) || !isInteger(sSouris_2)|| !isInteger(sVitesse)){
 					System.out.println("Valeur non int");
@@ -168,7 +129,7 @@ public class InterfaceModeGraphique implements Interface {
 		            } ).start ();
 				}
 				else{
-					//f.setSize(1250, 580);	
+
 				int nb_souris1 = (Integer.parseInt(sSouris_1));
 				simulateur.setNbPersonnes(0, nb_souris1);
 				int nb_souris2 = (Integer.parseInt(sSouris_2));
@@ -190,7 +151,7 @@ public class InterfaceModeGraphique implements Interface {
 	    					panel_map.removeAll();
 	    					
 	    					simulateur.lancerTour();
-	    					//simulateur.setNbPersonnes(0, 5);
+
 	    					Graphe uneMap = simulateur.getMap();
 
 	    					for(int i=0 ; i<=uneMap.getNbLignes() ; i++) {
