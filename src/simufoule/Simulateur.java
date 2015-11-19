@@ -104,4 +104,11 @@ public class Simulateur{
 	public int getNbDeplacements() {
 		return nbDeplacements;
 	}
+	
+	public void setMap(String content) {
+		MapGenerateur unGenerateur2 = new MapGenerateurVariable(content);
+		this.map = unGenerateur2.getMap();
+		/*this.setNbPersonnes(0, 5);
+		this.setNbPersonnes(1, 5);*/
+	}
 }
