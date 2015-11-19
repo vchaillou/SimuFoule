@@ -148,7 +148,7 @@ public class InterfaceModeGraphique implements Interface {
 				}
 				
 				//ENTRE COMMENTAIRE CAR SINON NB PERSONNES VIDE
-				simulateur.setMap(content);
+				//simulateur.setMap(content);
 				
 				//simulateur.setNbPersonnes(0, 50);
 				System.out.println(simulateur.getNbPersonnes());
@@ -190,7 +190,7 @@ public class InterfaceModeGraphique implements Interface {
 	    					panel_map.removeAll();
 	    					
 	    					simulateur.lancerTour();
-	    					simulateur.setNbPersonnes(0, 5);
+	    					//simulateur.setNbPersonnes(0, 5);
 	    					Graphe uneMap = simulateur.getMap();
 
 	    					for(int i=0 ; i<=uneMap.getNbLignes() ; i++) {
