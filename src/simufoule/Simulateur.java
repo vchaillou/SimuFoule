@@ -34,8 +34,6 @@ public class Simulateur{
 		// Juste pour les tests
 		//observateurs.add(new ParcoursObservateurAleatoire());
 		observateurs.add(new ParcoursObservateurDijkstra());
-		CaseEtatDepart.getInstance().setNbCasePersonnes(1, 1);
-		//CaseEtatDepart.getInstance().setNbCasePersonnes(1, 10);
 	}
 	
 	public Graphe getMap(){
@@ -51,7 +49,6 @@ public class Simulateur{
 		for (Personne pers : personnes) {
 			pers.faireTour(observateurs, destinations, map);
 			nbDeplacements++;
-			break;
 		}
 		for(int i=0 ; i<map.getNbLignes() ; i++) {
 			for(int j=0 ; j<map.getNbColonnes(); j++) {
@@ -63,10 +60,7 @@ public class Simulateur{
 	
 	//si la liste des personne est vide 
 	public boolean estTermine(){
-		if(personnes.isEmpty())
-			return true;
-		else
-			return false;
+		return personnes.isEmpty();
 	}
 
 	public void viderCase(Case uneCase){

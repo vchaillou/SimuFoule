@@ -13,9 +13,11 @@ public class ParcoursObservateurDijkstra implements ParcoursObservateur {
 		LinkedPriorityQueue<Case> uneFileDePriorite = new LinkedPriorityQueue<Case>(new CaseComparateur());
 		List<Case> casesVues = new ArrayList<Case>();
 		Map<Case, Case> uneRoute = new HashMap<Case, Case>();
-		Map<Case, Integer> desValeurs = new HashMap<Case, Integer>();
 		
-		desValeurs.put(uneCase, 0);
+		// On remet les valeurs à leur valeur initiale (infini)
+		unGraphe.razValeurs();
+		
+		uneCase.setValeur(0);
 		uneFileDePriorite.add(uneCase);
 		
 		while(uneFileDePriorite.peek() != null && !desDestinations.contains(uneFileDePriorite.peek())) {
@@ -23,15 +25,12 @@ public class ParcoursObservateurDijkstra implements ParcoursObservateur {
 			
 			if(!casesVues.contains(unNoeud)) {
 				casesVues.add(unNoeud);
-				Integer uneNouvelleDistance = desValeurs.get(unNoeud) + 1 + unNoeud.getAttente();
+				int uneNouvelleDistance = unNoeud.getValeur() + 1 + unNoeud.getAttente();
 				for(Lien edge : (List<Lien>)unNoeud.getEdges()) {
 					if(edge.getOther(uneCase).estCirculable()) {
-						Integer uneDistanceNoeud = desValeurs.get(edge.getOther(unNoeud));
-						if(uneDistanceNoeud == null) {
-							uneDistanceNoeud = Integer.MAX_VALUE;
-						}
+						int uneDistanceNoeud = edge.getOther(unNoeud).getValeur();
 						if(uneNouvelleDistance < uneDistanceNoeud) {
-							desValeurs.put(edge.getOther(unNoeud), uneNouvelleDistance);
+							edge.getOther(unNoeud).setValeur(uneNouvelleDistance);
 							uneRoute.put(edge.getOther(unNoeud), unNoeud);
 						}
 						uneFileDePriorite.add(edge.getOther(unNoeud));
@@ -44,9 +43,7 @@ public class ParcoursObservateurDijkstra implements ParcoursObservateur {
 			while(uneRoute.get(unNoeud) != uneCase) {
 				unNoeud = uneRoute.get(unNoeud);
 			}
-			if(!unNoeud.estOccupee()) {
-				uneCase.deplacer(unePersonne, unNoeud);
-			}
+			uneCase.deplacer(unePersonne, unNoeud);
 		}
 	}
 }

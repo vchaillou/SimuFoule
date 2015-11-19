@@ -7,6 +7,7 @@ public class Case implements INode<Integer, Integer> {
 
 	private int x;
 	private int y;
+	private int valeur;
 	private CaseEtat etat;
 	private List<Lien> edges;
 	
@@ -22,6 +23,7 @@ public class Case implements INode<Integer, Integer> {
 		occupee = false;
 		attente = etat.getAttente();
 		etat.initCase(this);
+		valeur = Integer.MAX_VALUE;
 	}
 	
 	public Case(int unX, int unY) {
@@ -52,11 +54,12 @@ public class Case implements INode<Integer, Integer> {
 
 	@Override
 	public Integer getValeur() {
-		return 0;
+		return valeur;
 	}
 
 	@Override
 	public void setValeur(Integer uneValeur) {
+		valeur = uneValeur;
 	}
 
 	@Override
@@ -80,8 +83,10 @@ public class Case implements INode<Integer, Integer> {
 			attente--;
 		}
 		else {
-			unePersonne.setCase(uneCase);
-			attente = etat.getAttente();
+			if(uneCase.estCirculable() && !uneCase.estOccupee()) {
+				unePersonne.setCase(uneCase);
+				attente = etat.getAttente();
+			}
 		}
 	}
 	
@@ -99,10 +104,6 @@ public class Case implements INode<Integer, Integer> {
 	
 	public boolean estDepart() {
 		return etat.estDepart();
-	}
-	
-	public String toString() {
-		return "" + toChar();
 	}
 
 }

@@ -57,4 +57,11 @@ public class Graphe implements IGraph<Integer, Integer> {
 	public int getNbLignes() {
 		return nbLignes;
 	}
+	
+	public void razValeurs() {
+		for(Case uneCase : noeuds) {
+			uneCase.setValeur(Integer.MAX_VALUE);
+		}
+	}
+
 }
