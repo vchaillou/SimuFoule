@@ -64,7 +64,7 @@ public class CaseEtatDepart implements CaseEtat {
 	public void setNbCasePersonnes(int unNumCase, int unNbPersonnes) {
 		casesPersonnes.put(cases.get(unNumCase), unNbPersonnes);
 	}
-
+	
 	@Override
 	public boolean estDepart() {
 		return true;

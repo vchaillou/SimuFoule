@@ -1,5 +1,6 @@
 package simufoule;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,26 +15,34 @@ public class Simulateur{
 	private int nbArrivees;
 	private int nbDeplacements;
 	
-	public Simulateur() {
-		MapGenerateur unGenerateur = new MapGenerateurFixe();
-		map = unGenerateur.getMap();
+	public Simulateur(boolean estFixe) {
 		personnes = new ArrayList<Personne>();
 		observateurs = new ArrayList<ParcoursObservateur>();
 		destinations = new ArrayList<Case>();
-		for(int i=0 ; i<map.getNbLignes() ; i++) {
-			for(int j=0 ; j<map.getNbColonnes() ; j++) {
-				if(map.getNode(i, j).estArrivee()) {
-					destinations.add(map.getNode(i, j));
+		if(estFixe){
+			MapGenerateur unGenerateur = new MapGenerateurFixe();
+			map = unGenerateur.getMap();
+			for(int i=0 ; i<map.getNbLignes() ; i++) {
+				for(int j=0 ; j<map.getNbColonnes() ; j++) {
+					if(map.getNode(i, j).estArrivee()) {
+						destinations.add(map.getNode(i, j));
+					}
 				}
 			}
 		}
+		
 		nbTours=0;
 		nbArrivees=0;
 		nbDeplacements=0;
 		
 		// Juste pour les tests
 		//observateurs.add(new ParcoursObservateurAleatoire());
-		observateurs.add(new ParcoursObservateurDijkstra());
+		//observateurs.add(new ParcoursObservateurDijkstra());
+		observateurs.add(new ParcoursObservateurAStar());
+	}
+	
+	public Simulateur() {
+		this(true);
 	}
 	
 	public Graphe getMap(){
@@ -105,9 +114,16 @@ public class Simulateur{
 		return nbDeplacements;
 	}
 	
-	public void setMap(String content) {
-		MapGenerateur unGenerateur2 = new MapGenerateurVariable(content);
+	public void setMap(File unFichier) {
+		MapGenerateur unGenerateur2 = new MapGenerateurVariable(unFichier);
 		this.map = unGenerateur2.getMap();
+		for(int i=0 ; i<map.getNbLignes() ; i++) {
+			for(int j=0 ; j<map.getNbColonnes() ; j++) {
+				if(map.getNode(i, j).estArrivee()) {
+					destinations.add(map.getNode(i, j));
+				}
+			}
+		}
 		/*this.setNbPersonnes(0, 5);
 		this.setNbPersonnes(1, 5);*/
 	}

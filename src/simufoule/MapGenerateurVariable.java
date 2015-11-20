@@ -1,10 +1,29 @@
 package simufoule;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class MapGenerateurVariable implements MapGenerateur {
 
 	private char[][] map;
+	
+	private static String readFile(String path, Charset encoding) throws IOException 
+	{
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return new String(encoded, encoding);
+	}
 
-	public MapGenerateurVariable(String content) {
+	public MapGenerateurVariable(File unFichier) {
+		String content = "";
+		try {
+			content = readFile(unFichier.getPath(), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		String[] carte2 = content.split("\n");
 		int i = 0;
 		int y = 0;
@@ -37,17 +56,17 @@ public class MapGenerateurVariable implements MapGenerateur {
 					if(cs2 == unEtat.toChar() && bOk == false) {
 						Case uneCase = new Case(i, y, unEtat);
 						map.registerNode(uneCase);
-						if(i > 0 && uneCase.estCirculable() && map.getNode(i-1, y).estCirculable()) {
+						if(i > 0 && (uneCase.estCirculable() || uneCase.estDepart()) && (map.getNode(i-1, y).estCirculable() || map.getNode(i-1, y).estDepart())) {
 							new Lien(uneCase, map.getNode(i-1, y), 1);
 						}
-						if(y > 0 && uneCase.estCirculable() && map.getNode(i, y-1).estCirculable()) {
+						if(y > 0 && (uneCase.estCirculable() || uneCase.estDepart()) && (map.getNode(i, y-1).estCirculable() || map.getNode(i, y-1).estDepart())) {
 							new Lien(uneCase, map.getNode(i, y-1), 1);
 						}
 						i++;
 						bOk = true;
 					}
 				}
-				if(bOk == false) {
+				if(bOk == false && cs2 != '\0' && cs2 != '\r' && cs2 != '\t') {
 					map.registerNode(new Case(i++, y, CaseEtatBloquee.getInstance()));	// si erreur, case bloquée par défaut
 				}
 			}

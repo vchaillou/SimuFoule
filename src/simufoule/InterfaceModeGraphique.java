@@ -5,11 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,16 +19,17 @@ public class InterfaceModeGraphique implements Interface {
 	private Simulateur simulateur;
 	private int vitesse;		// en ms
 	
-	public JPanel panel_principal;
-	public JPanel panel_info;
-	public JPanel panel_map;
-	public JPanel panel_bas;
+	private JPanel panel_principal;
+	private JPanel panel_info;
+	private JPanel panel_map;
+	private JPanel panel_bas;
 	
-	public JFrame f;
+	@SuppressWarnings("unused")
+	private JFrame f;
 
-	public JTextField nb_souris_1;
-	public JTextField nb_souris_2;
-	public JTextField speed;
+	private JTextField nb_souris_1;
+	private JTextField nb_souris_2;
+	private JTextField speed;
 	
 	public InterfaceModeGraphique(Simulateur unSimulateur) {
 		simulateur = unSimulateur;
@@ -78,14 +74,13 @@ public class InterfaceModeGraphique implements Interface {
         
         
                 
-		 f.setSize(1250, 600);
-	     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	     f.setVisible(true);
-		 //Fenetre non redimentionnable
-	     f.setResizable(false);
+		f.setSize(1250, 600);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setVisible(true);
+		//Fenetre non redimentionnable
+		f.setResizable(false);
 	     
-	  btn_lancer.addActionListener(new ActionListener()
-	 
+		btn_lancer.addActionListener(new ActionListener()
 	    {
 			@Override
 			public void actionPerformed(ActionEvent arge0) {
@@ -101,16 +96,8 @@ public class InterfaceModeGraphique implements Interface {
 					File selectedFile = fileChooser.getSelectedFile();
 					
 					System.out.println(selectedFile.getName());
-					try {
-						String content = readFile(selectedFile.getPath(), StandardCharsets.UTF_8);
-						System.out.println(content);
-						
-						//ENTRE COMMENTAIRE CAR SINON NB PERSONNES VIDE
-						//simulateur.setMap(content);
-
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					//ENTRE COMMENTAIRE CAR SINON NB PERSONNES VIDE
+					simulateur.setMap(selectedFile);
 				}
 				
 				//System.out.println(simulateur.getNbPersonnes());				
@@ -203,7 +190,6 @@ public class InterfaceModeGraphique implements Interface {
 	    });
 
 	}
-	
 
 	public static boolean isInteger(String s) {
 	    try { 
@@ -215,13 +201,6 @@ public class InterfaceModeGraphique implements Interface {
 	    }
 	    // only got here if we didn't return false
 	    return true;
-	}
-	
-	public static String readFile(String path, Charset encoding) 
-			  throws IOException 
-	{
-	  byte[] encoded = Files.readAllBytes(Paths.get(path));
-	  return new String(encoded, encoding);
 	}
 	
 }
