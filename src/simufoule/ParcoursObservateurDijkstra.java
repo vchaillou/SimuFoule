@@ -30,7 +30,10 @@ public class ParcoursObservateurDijkstra implements ParcoursObservateur {
 					if(edge.getOther(uneCase).estCirculable()) {
 						int uneDistanceNoeud = edge.getOther(unNoeud).getValeur();
 						if(uneNouvelleDistance < uneDistanceNoeud) {
-							edge.getOther(unNoeud).setValeur(uneNouvelleDistance);
+							if(edge.getOther(unNoeud).estOccupee())
+								edge.getOther(unNoeud).setValeur(uneNouvelleDistance+1);
+							else
+								edge.getOther(unNoeud).setValeur(uneNouvelleDistance);
 							uneRoute.put(edge.getOther(unNoeud), unNoeud);
 						}
 						uneFileDePriorite.add(edge.getOther(unNoeud));
