@@ -10,6 +10,7 @@ public class Simulateur{
 	private List<Personne> personnes;
 	private List<ParcoursObservateur> observateurs;
 	private List<Case> destinations;
+	private List<Case> departs;
 	
 	private int nbTours;
 	private int nbArrivees;
@@ -19,6 +20,8 @@ public class Simulateur{
 		personnes = new ArrayList<Personne>();
 		observateurs = new ArrayList<ParcoursObservateur>();
 		destinations = new ArrayList<Case>();
+		departs = new ArrayList<Case>();
+		
 		if(estFixe){
 			MapGenerateur unGenerateur = new MapGenerateurFixe();
 			map = unGenerateur.getMap();
@@ -26,6 +29,10 @@ public class Simulateur{
 				for(int j=0 ; j<map.getNbColonnes() ; j++) {
 					if(map.getNode(i, j).estArrivee()) {
 						destinations.add(map.getNode(i, j));
+					}
+					if (map.getNode(i, j).estDepart()) {
+						System.out.println("EST DEPART");
+						departs.add(map.getNode(i, j));
 					}
 				}
 			}
@@ -122,6 +129,9 @@ public class Simulateur{
 				if(map.getNode(i, j).estArrivee()) {
 					destinations.add(map.getNode(i, j));
 				}
+				if(map.getNode(i, j).estDepart()) {
+					departs.add(map.getNode(i, j));
+				}
 			}
 		}
 		/*this.setNbPersonnes(0, 5);
@@ -140,12 +150,13 @@ public class Simulateur{
 		if(destinations.size() == 0) {			// Au moins une destination
 			iResultat += 1;
 		}
-		if(destinations.size() == 0) {			// Au moins un départ
+		if(departs.size() == 0) {			// Au moins un départ
+			//System.out.println("NB DEPART"+departs.size());
 			iResultat += 2;
-		}
+		}/*
 		if(destinations.size() == 0) {			// Au moins une route dispo depuis chaque départ
 			iResultat += 4;
-		}
+		}*/
 		return iResultat;
 	}
 }
