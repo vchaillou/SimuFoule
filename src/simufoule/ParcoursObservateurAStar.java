@@ -55,7 +55,7 @@ public class ParcoursObservateurAStar implements ParcoursObservateur {
 						//longueur = edge.getOther(unNoeud).getValeur();
 						longueur = Integer.MAX_VALUE;
 						for(Case uneDestination : desDestinations) {
-							temp = longueurCases(uneCase, uneDestination);
+							temp = longueurCases(edge.getOther(unNoeud), uneDestination);
 							if(temp < longueur) {
 								longueur = temp;
 							}

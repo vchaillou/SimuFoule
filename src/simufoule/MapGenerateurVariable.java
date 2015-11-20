@@ -8,6 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class MapGenerateurVariable implements MapGenerateur {
+	
+	private static final boolean _DIAGONALES_ = true;
+	//private static final boolean _DIAGONALES_ = false;
 
 	private char[][] map;
 	
@@ -56,12 +59,21 @@ public class MapGenerateurVariable implements MapGenerateur {
 					if(cs2 == unEtat.toChar() && bOk == false) {
 						Case uneCase = new Case(i, y, unEtat);
 						map.registerNode(uneCase);
-						if(i > 0 && (uneCase.estCirculable() || uneCase.estDepart()) && (map.getNode(i-1, y).estCirculable() || map.getNode(i-1, y).estDepart())) {
+						if(i > 0 && (uneCase.estCirculable() || uneCase.estDepart()) && map.getNode(i-1, y) != null && (map.getNode(i-1, y).estCirculable() || map.getNode(i-1, y).estDepart())) {
 							new Lien(uneCase, map.getNode(i-1, y), 1);
 						}
-						if(y > 0 && (uneCase.estCirculable() || uneCase.estDepart()) && (map.getNode(i, y-1).estCirculable() || map.getNode(i, y-1).estDepart())) {
+						if(y > 0 && (uneCase.estCirculable() || uneCase.estDepart()) && map.getNode(i, y-1) != null && (map.getNode(i, y-1).estCirculable() || map.getNode(i, y-1).estDepart())) {
 							new Lien(uneCase, map.getNode(i, y-1), 1);
 						}
+						if(_DIAGONALES_) {
+							if(i > 0 && (uneCase.estCirculable() || uneCase.estDepart()) && map.getNode(i-1, y-1) != null && (map.getNode(i-1, y-1).estCirculable() || map.getNode(i-1, y-1).estDepart())) {
+								new Lien(uneCase, map.getNode(i-1, y-1), 1);
+							}
+							if(y > 0 && (uneCase.estCirculable() || uneCase.estDepart()) && map.getNode(i+1, y-1) != null && (map.getNode(i+1, y-1).estCirculable() || map.getNode(i+1, y-1).estDepart())) {
+								new Lien(uneCase, map.getNode(i+1, y-1), 1);
+							}
+						}
+						
 						i++;
 						bOk = true;
 					}

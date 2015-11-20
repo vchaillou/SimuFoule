@@ -127,4 +127,25 @@ public class Simulateur{
 		/*this.setNbPersonnes(0, 5);
 		this.setNbPersonnes(1, 5);*/
 	}
+	
+	/*
+	 * Valeurs de retour :
+	 * - 0 => tout va bien
+	 * - 1 => Aucune destination trouvée
+	 * - 2 => Aucun départ trouvé
+	 * - 4 => Aucune route trouvée pour un certain départ
+	 */
+	public int checkMap() {
+		int iResultat = 0;
+		if(destinations.size() == 0) {			// Au moins une destination
+			iResultat += 1;
+		}
+		if(destinations.size() == 0) {			// Au moins un départ
+			iResultat += 2;
+		}
+		if(destinations.size() == 0) {			// Au moins une route dispo depuis chaque départ
+			iResultat += 4;
+		}
+		return iResultat;
+	}
 }
