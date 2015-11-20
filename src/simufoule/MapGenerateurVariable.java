@@ -73,6 +73,7 @@ public class MapGenerateurVariable implements MapGenerateur {
 								new Lien(uneCase, map.getNode(i+1, y-1), 1);
 							}
 						}
+						
 						i++;
 						bOk = true;
 					}

@@ -17,44 +17,46 @@ import javax.swing.JTextField;
 public class InterfaceModeGraphique implements Interface {
 
 	private Simulateur simulateur;
-	private int vitesse;		// en ms
-	
+	private int vitesse; // en ms
+
 	private JPanel panel_principal;
 	private JPanel panel_info;
 	private JPanel panel_map;
 	private JPanel panel_bas;
-	
+
 	@SuppressWarnings("unused")
 	private JFrame f;
 
 	private JTextField nb_souris_1;
 	private JTextField nb_souris_2;
 	private JTextField speed;
-	
+
+	JLabel check_map;
+
 	public InterfaceModeGraphique(Simulateur unSimulateur) {
 		simulateur = unSimulateur;
 		vitesse = 1000;
 	}
-	
-	
+
 	@Override
 	public void afficherMap() {
 		final JFrame f = new JFrame("Simufoule");
-		
+
 		panel_principal = new JPanel(new BorderLayout());
 		f.setContentPane(panel_principal);
-		panel_bas = new   JPanel();
-		
-		
+		panel_bas = new JPanel();
+
 		nb_souris_1 = new JTextField();
-		nb_souris_1.setColumns(10); //On lui donne un nombre de colonnes à afficher
-		
+		nb_souris_1.setColumns(10); // On lui donne un nombre de colonnes à
+									// afficher
+
 		nb_souris_2 = new JTextField();
-		nb_souris_2.setColumns(10); //On lui donne un nombre de colonnes à afficher
-		
+		nb_souris_2.setColumns(10); // On lui donne un nombre de colonnes à
+									// afficher
+
 		speed = new JTextField();
-		speed.setColumns(10); //On lui donne un nombre de colonnes à afficher
-		
+		speed.setColumns(10); // On lui donne un nombre de colonnes à afficher
+
 		panel_bas.add(new JLabel("Porte 1 "));
 		panel_bas.add(nb_souris_1);
 		panel_bas.add(new JLabel("Porte 2 "));
@@ -63,61 +65,94 @@ public class InterfaceModeGraphique implements Interface {
 		panel_bas.add(speed);
 		JButton btn_lancer = new JButton("Lancez");
 		panel_bas.add(btn_lancer);
-		
+
 		panel_principal.add(panel_bas, BorderLayout.SOUTH);
 		panel_map = new JPanel(new GridLayout(19, 49));
-        
-		panel_info = new   JPanel();
-        
-        panel_principal.add(panel_map, BorderLayout.NORTH);
-        panel_principal.add(panel_info, BorderLayout.CENTER);
-        
-        
+
+		panel_info = new JPanel();
+
+		panel_principal.add(panel_map, BorderLayout.NORTH);
+		panel_principal.add(panel_info, BorderLayout.CENTER);
+
 		f.setSize(1250, 600);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
-		//Fenetre non redimentionnable
+		// Fenetre non redimentionnable
 		f.setResizable(false);
-	     
-		btn_lancer.addActionListener(new ActionListener()
-	    {
+
+		btn_lancer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arge0) {
 				System.out.println("Clic");
-				
+
 				String sSouris_1 = nb_souris_1.getText();
 				String sSouris_2 = nb_souris_2.getText();
 				String sVitesse = speed.getText();
-				
+
 				JFileChooser fileChooser = new JFileChooser();
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-					
+
 					System.out.println(selectedFile.getName());
-					//ENTRE COMMENTAIRE CAR SINON NB PERSONNES VIDE
+					// ENTRE COMMENTAIRE CAR SINON NB PERSONNES VIDE
 					simulateur.setMap(selectedFile);
 				}
 				f.setSize(26*simulateur.getMap().getNbColonnes(), 26*simulateur.getMap().getNbLignes()+100);
 				((GridLayout)panel_map.getLayout()).setRows(simulateur.getMap().getNbLignes()+1);
 				((GridLayout)panel_map.getLayout()).setColumns(simulateur.getMap().getNbColonnes()+1);
 				
-				//System.out.println(simulateur.getNbPersonnes());				
-				
-				if(!isInteger(sSouris_1) || !isInteger(sSouris_2)|| !isInteger(sVitesse)){
+				// System.out.println(simulateur.getNbPersonnes());
+				int checkMap = simulateur.checkMap();
+				System.out.println("Resultat verification map = " + checkMap);
+				if (checkMap != 0) {
+					check_map = new JLabel();
+					switch (checkMap) {
+					case 1:
+						System.out.println("RENTRE DANS CASE 1");
+						check_map = new JLabel("Une erreur est survenue : Aucune destination trouvée");
+						break;
+					case 2:
+						check_map = new JLabel("Une erreur est survenue : Aucun départ trouvé");
+						break;
+					case 3:
+						check_map = new JLabel("Une erreur est survenue : Aucun départ ni d'arrivé trouvé");
+						break;
+					case 4:
+						check_map = new JLabel(
+								"Une erreur est survenue : Aucune route trouvée pour au moins un départ");
+						break;
+					case 7:
+						check_map = new JLabel(
+								"Une erreur est survenue : Aucun départ, aucune arrivée, aucune route possible");
+						break;
+					/*
+					 * default: check_map = new JLabel("Defaut"); break;
+					 */
+					}
+					System.out.println(check_map);
+					panel_info.removeAll();
+
+					new Thread(new Runnable() {
+						public void run() {
+							panel_info.add(check_map);
+							panel_map.updateUI();
+						}
+					}).start();
+
+				}
+				else if (!isInteger(sSouris_1) || !isInteger(sSouris_2) || !isInteger(sVitesse)) {
 					System.out.println("Valeur non int");
 					panel_info.removeAll();
-					
-					new Thread ( new Runnable ()
-		            {
-		                public void run ()
-		                {
-		                	panel_info.add(new JLabel("Une erreur est survenue : au moins un des champs est mal renseigné"));
-		                	panel_map.updateUI();
-		                }
-		            } ).start ();
-				}
-				else{
+
+					new Thread(new Runnable() {
+						public void run() {
+							panel_info.add(
+									new JLabel("Une erreur est survenue : au moins un des champs est mal renseigné"));
+							panel_map.updateUI();
+						}
+					}).start();
+				} else{
 
 				int nb_souris1 = (Integer.parseInt(sSouris_1));
 				simulateur.setNbPersonnes(0, nb_souris1);
@@ -194,23 +229,24 @@ public class InterfaceModeGraphique implements Interface {
 	    				}
 	                }
 	            } ).start ();
+
 				}
 			}
-			
-	    });
+
+		});
 
 	}
 
 	public static boolean isInteger(String s) {
-	    try { 
-	        Integer.parseInt(s); 
-	    } catch(NumberFormatException e) { 
-	        return false; 
-	    } catch(NullPointerException e) {
-	        return false;
-	    }
-	    // only got here if we didn't return false
-	    return true;
+		try {
+			Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			return false;
+		} catch (NullPointerException e) {
+			return false;
+		}
+		// only got here if we didn't return false
+		return true;
 	}
-	
+
 }
