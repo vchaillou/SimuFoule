@@ -69,7 +69,7 @@ public class Simulateur{
 	
 	//si la liste des personne est vide 
 	public boolean estTermine(){
-		return personnes.isEmpty();
+		return (nbTours > 0) && personnes.isEmpty();
 	}
 
 	public void viderCase(Case uneCase){

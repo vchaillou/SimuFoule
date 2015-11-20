@@ -39,7 +39,7 @@ public class InterfaceModeGraphique implements Interface {
 	
 	@Override
 	public void afficherMap() {
-		JFrame f = new JFrame("Simufoule");
+		final JFrame f = new JFrame("Simufoule");
 		
 		panel_principal = new JPanel(new BorderLayout());
 		f.setContentPane(panel_principal);
@@ -73,7 +73,6 @@ public class InterfaceModeGraphique implements Interface {
         panel_principal.add(panel_info, BorderLayout.CENTER);
         
         
-                
 		f.setSize(1250, 600);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
@@ -99,6 +98,7 @@ public class InterfaceModeGraphique implements Interface {
 					//ENTRE COMMENTAIRE CAR SINON NB PERSONNES VIDE
 					simulateur.setMap(selectedFile);
 				}
+				f.setSize(26*simulateur.getMap().getNbColonnes(), 26*simulateur.getMap().getNbLignes()+100);
 				
 				//System.out.println(simulateur.getNbPersonnes());				
 				
@@ -110,7 +110,7 @@ public class InterfaceModeGraphique implements Interface {
 		            {
 		                public void run ()
 		                {
-		                	panel_info.add(new JLabel("Une erreur est survenue : au moins un de champs est mal renseigné"));
+		                	panel_info.add(new JLabel("Une erreur est survenue : au moins un des champs est mal renseigné"));
 		                	panel_map.updateUI();
 		                }
 		            } ).start ();
@@ -120,7 +120,7 @@ public class InterfaceModeGraphique implements Interface {
 				int nb_souris1 = (Integer.parseInt(sSouris_1));
 				simulateur.setNbPersonnes(0, nb_souris1);
 				int nb_souris2 = (Integer.parseInt(sSouris_2));
-				simulateur.setNbPersonnes(1, nb_souris2);
+				//simulateur.setNbPersonnes(1, nb_souris2);
 				
 				vitesse = (Integer.parseInt(sVitesse));
 				
@@ -131,8 +131,8 @@ public class InterfaceModeGraphique implements Interface {
 	            {
 	                public void run ()
 	                {
-	                	System.out.println("thread");
-	                	while(true){
+	                	System.out.println("thread"+simulateur.estTermine());
+	                	while(!simulateur.estTermine()){
 
 	    					System.out.println("Nouveau Tour");
 	    					panel_map.removeAll();
@@ -145,25 +145,33 @@ public class InterfaceModeGraphique implements Interface {
 	    						for(int j=0 ; j<=uneMap.getNbColonnes() ; j++) {
 	    							JLabel l = new JLabel();
 	    							
-	    							switch(uneMap.getNode(i, j).toChar()){
-	    							case ' ':
-	    								l = new JLabel(new ImageIcon("src/standard.png"));
-	    								break;
-	    							case 'G':
-	    								l = new JLabel(new ImageIcon("src/herbe.png"));
-	    								break;
-	    							case '*':
+	    							if(uneMap.getNode(i, j) == null) {
 	    								l = new JLabel(new ImageIcon("src/mur.png"));
-	    								break;
-	    							case 'D':
-	    								l = new JLabel(new ImageIcon("src/depart.png"));
-	    								break;
-	    							case 'A':
-	    								l = new JLabel(new ImageIcon("src/arrive.png"));
-	    								break;
-	    							case 'P':
-	    								l = new JLabel(new ImageIcon("src/souris.png"));
-	    								break;
+	    							}
+	    							else {
+		    							switch(uneMap.getNode(i, j).toChar()){
+		    							case ' ':
+		    								l = new JLabel(new ImageIcon("src/standard.png"));
+		    								break;
+		    							case 'G':
+		    								l = new JLabel(new ImageIcon("src/herbe.png"));
+		    								break;
+		    							case '*':
+		    								l = new JLabel(new ImageIcon("src/mur.png"));
+		    								break;
+		    							case 'D':
+		    								l = new JLabel(new ImageIcon("src/depart.png"));
+		    								break;
+		    							case 'A':
+		    								l = new JLabel(new ImageIcon("src/arrive.png"));
+		    								break;
+		    							case 'P':
+		    								l = new JLabel(new ImageIcon("src/souris.png"));
+		    								break;
+		    							default :
+		    								l = new JLabel(new ImageIcon("src/mur.png"));
+		    								break;
+		    							}
 	    							}
 	    							
 	    							panel_map.add(l);
