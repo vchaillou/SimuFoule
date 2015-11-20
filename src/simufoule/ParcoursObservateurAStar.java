@@ -61,7 +61,10 @@ public class ParcoursObservateurAStar implements ParcoursObservateur {
 							}
 						}
 						if(uneNouvelleDistance < uneDistanceNoeud) {
-							desCouts.put(edge.getOther(unNoeud), uneNouvelleDistance);
+							if(edge.getOther(unNoeud).estOccupee())
+								desCouts.put(edge.getOther(unNoeud), uneNouvelleDistance+1);
+							else
+								desCouts.put(edge.getOther(unNoeud), uneNouvelleDistance);
 							edge.getOther(unNoeud).setValeur(uneNouvelleDistance + longueur);
 							uneRoute.put(edge.getOther(unNoeud), unNoeud);
 						}

@@ -62,7 +62,9 @@ public class CaseEtatDepart implements CaseEtat {
 	}
 	
 	public void setNbCasePersonnes(int unNumCase, int unNbPersonnes) {
-		casesPersonnes.put(cases.get(unNumCase), unNbPersonnes);
+		if(unNumCase < cases.size()) {
+			casesPersonnes.put(cases.get(unNumCase), unNbPersonnes);
+		}
 	}
 	
 	@Override

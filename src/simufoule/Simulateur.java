@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Simulateur{
 
+	//private static final boolean _ARRIVEES_NO_LIMIT_ = true;
+	private static final boolean _ARRIVEES_NO_LIMIT_ = false;
+	
 	private Graphe map;
 	private List<Personne> personnes;
 	private List<ParcoursObservateur> observateurs;
@@ -55,9 +58,18 @@ public class Simulateur{
 
 	//parcours la liste des personne et faireTour();
 	public void lancerTour() {
-		for (Personne pers : personnes) {
+		List<Personne> desPersonnes = new ArrayList<Personne>();
+		for(Personne pers : personnes) {
+			desPersonnes.add(pers);
+		}
+		for (Personne pers : desPersonnes) {
 			pers.faireTour(observateurs, destinations, map);
 			nbDeplacements++;
+			if(_ARRIVEES_NO_LIMIT_) {
+				for(Case uneCase : destinations) {
+					uneCase.faireTour(this);
+				}
+			}
 		}
 		for(int i=0 ; i<map.getNbLignes() ; i++) {
 			for(int j=0 ; j<map.getNbColonnes(); j++) {

@@ -99,6 +99,8 @@ public class InterfaceModeGraphique implements Interface {
 					simulateur.setMap(selectedFile);
 				}
 				f.setSize(26*simulateur.getMap().getNbColonnes(), 26*simulateur.getMap().getNbLignes()+100);
+				((GridLayout)panel_map.getLayout()).setRows(simulateur.getMap().getNbLignes()+1);
+				((GridLayout)panel_map.getLayout()).setColumns(simulateur.getMap().getNbColonnes()+1);
 				
 				//System.out.println(simulateur.getNbPersonnes());				
 				
@@ -120,7 +122,7 @@ public class InterfaceModeGraphique implements Interface {
 				int nb_souris1 = (Integer.parseInt(sSouris_1));
 				simulateur.setNbPersonnes(0, nb_souris1);
 				int nb_souris2 = (Integer.parseInt(sSouris_2));
-				//simulateur.setNbPersonnes(1, nb_souris2);
+				simulateur.setNbPersonnes(1, nb_souris2);
 				
 				vitesse = (Integer.parseInt(sVitesse));
 				
